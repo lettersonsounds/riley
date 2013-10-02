@@ -2,21 +2,20 @@ from pippi import dsp
 from pippi import tune
 import rhodes
 
-#freqs = tune.fromdegrees([0,1,2,3,4,5,6,9], 3, 'c', scale=range(12))
-
 # interval map for chords...
+maj = [1, 3, 5, 6, 8, 10, 12]
 chords = {
-        1: [1, 4, 7],
+        1: [1, 5, 8],
         2: [2, 5, 8],
-        3: [3, 6, 9],
-        4: [4, 7, 10],
-        5: [5, 8, 11], 
-        6: [6, 9, 12], 
+        3: [3, 6, 10],
+        4: [4, 6, 10],
+        5: [5, 8, 12], 
+        6: [6, 8, 12], 
         7: [7, 10, 1], 
-        8: [8, 11, 2], 
+        8: [8, 10, 1], 
         9: [9, 12, 3],
-        10: [10, 1, 4], 
-        11: [11, 2, 5],
+        10: [10, 1, 5], 
+        11: [11, 3, 5],
         12: [12, 3, 6],
         }
 
@@ -31,7 +30,7 @@ def choose_interval(lastroot):
 
 roots = []
 lastroot = 1
-for root in range(12):
+for root in range(6):
     roots += [ lastroot ]
     nextroot = choose_interval(lastroot)
     lastroot = nextroot
@@ -42,15 +41,10 @@ freqs = [ tune.fromdegrees([ cr - 1 for cr in chords[root]], 3, 'c', scale=range
 
 out = ''
 
-#f = [ dsp.randchoose(freqs) for f in range(3) ]
-
 for r in range(50):
     layers = []
 
     for i in range(3):
-        #if r % 5 == 0:
-            #f = [ dsp.randchoose(freqs) for f in range(3) ]
-
         f = freqs[r % len(freqs)]
 
         notes = []
