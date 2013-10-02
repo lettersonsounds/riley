@@ -17,7 +17,6 @@ def rhodes(total_time, freq=220.0, ampscale=0.5):
         wtable = dsp.wavetable('hann', int(env_length))
         wtable = wtable[int(env_length / 2):]
         wtable.extend([0 for i in range(total_time - len(wtable))])
-        print env_length, len(wtable), dsp.flen(partial)
         
         partial = dsp.split(partial, 32)
         partial = [ dsp.amp(partial[i], wtable[i]) for i in range(len(partial)) ]
