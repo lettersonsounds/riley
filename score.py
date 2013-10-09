@@ -23,7 +23,7 @@ chords = {
 
 def choose_interval(lastroot):
     interval = dsp.randchoose([3, 4, -3, -4])
-    if interval + lastroot >= 1 and interval + lastroot <= 12:
+    if interval + lastroot >= 1 and interval + lastroot <= 12 and interval + lastroot != 2 and interval + lastroot != 9:
         nextroot = lastroot + interval
     else:
         nextroot = choose_interval(lastroot)
@@ -46,18 +46,23 @@ def make_chords():
 
 out = ''
 
-for times in range(6):
+for times in range(1):
     freqs = make_chords()
 
-    for r in range(50):
+    for r in range(6):
         layers = []
 
         for i in range(3):
             f = freqs[r % len(freqs)]
 
             notes = []
-            for n in range(dsp.randint(10, 20)):
-                notes += [ rhodes.rhodes(dsp.mstf(dsp.rand(80, 90)), f[n % len(f)]) ]
+            for n in range(dsp.randint(70, 100)):
+                note_len = dsp.mstf(dsp.rand(30, 40))
+                note_freq = f[n % len(f)]
+                note = rhodes.rhodes(note_len, note_freq)
+                note = dsp.pine(note, note_len * 4, note_freq)
+
+                notes += [ note ]
 
             layers += [ ''.join(notes) ]
 
